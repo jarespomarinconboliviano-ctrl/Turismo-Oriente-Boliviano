@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Guía turística para descubrir y planificar viajes por Santa Cruz, Beni y Pando.">
+  <title>Turismo del Oriente Boliviano</title>
+  <style>
+    :root{--forest:#0d3b2b;--leaf:#34765b;--gold:#d8a23d;--sand:#f3ede1;--paper:#fffdf8;--ink:#173128;--muted:#64736d;--line:#dfe6df;--white:#fff;--shadow:0 18px 60px #0c2f231a}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}
+    header{height:74px;padding:0 max(20px,calc((100vw - 1180px)/2));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;background:#fffdf8f5;border-bottom:1px solid #17312815;backdrop-filter:blur(14px)}
+    .brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:50% 50% 50% 15%;background:var(--forest);color:#f5c85d;display:grid;place-items:center;font-weight:900;font-size:21px;transform:rotate(-8deg)}.brand span{display:grid;line-height:1}.brand b{font:600 20px Georgia,serif}.brand small{margin-top:5px;color:var(--leaf);font-size:9px;letter-spacing:.22em;font-weight:900}
+    nav{display:flex;gap:5px}nav button{border:0;background:transparent;padding:10px 13px;border-radius:20px;font-weight:800;font-size:13px}nav button:hover{background:#e9f0eb}.html-badge{padding:8px 12px;border-radius:99px;background:#e9f0eb;font-size:12px;font-weight:900}
+    .hero{min-height:570px;color:white;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 78% 28%,#d7a44880,transparent 18%),radial-gradient(circle at 75% 105%,#4d8974 0 19%,transparent 20%),linear-gradient(125deg,#08291e 0%,#15503b 52%,#6f6c3c 100%)}
+    .hero:before{content:"";position:absolute;inset:auto -8% -43% 25%;height:85%;border-radius:50% 45% 0 0;background:linear-gradient(160deg,#32795d,#123f30);transform:rotate(-8deg);opacity:.8}.hero:after{content:"";position:absolute;width:50vw;height:16vw;right:-4vw;bottom:8vw;border:2.5vw solid #ffffff10;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-12deg)}
+    .hero-inner{width:min(1180px,calc(100% - 40px));margin:auto;position:relative;z-index:1;padding:70px 0}.eyebrow,.kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:900;color:#efc872;margin:0 0 14px}.hero h1{max-width:760px;margin:0;font:500 clamp(45px,6vw,78px)/.98 Georgia,serif;letter-spacing:-.045em}.hero-desc{max-width:650px;color:#ffffffd0;font-size:18px;margin:23px 0 30px}
+    .searchbox{width:min(900px,100%);display:grid;grid-template-columns:1.4fr .7fr auto;gap:8px;padding:8px;background:white;color:var(--ink);border-radius:17px;box-shadow:0 20px 60px #0004}.searchbox input,.searchbox select{min-height:52px;border:0;outline:0;padding:0 15px;background:white}.searchbox input{border-right:1px solid var(--line)}.searchbox button{border:0;border-radius:11px;padding:0 24px;background:var(--gold);font-weight:900}.stats{display:flex;gap:28px;margin-top:27px}.stats span{display:flex;gap:7px;align-items:center;color:#ffffffb8;font-size:12px}.stats b{color:white;font:600 24px Georgia,serif}
+    main{width:min(1180px,calc(100% - 40px));margin:auto;padding:72px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:33px}.kicker{color:#9d721c;margin-bottom:7px}.section-head h2,.services h2{font:500 clamp(30px,3.5vw,47px)/1.08 Georgia,serif;letter-spacing:-.035em;margin:0}.tabs{display:flex;gap:4px;padding:5px;border:1px solid var(--line);background:#f2f5f2;border-radius:13px}.tabs button{border:0;background:transparent;padding:9px 12px;border-radius:9px;font-size:12px;font-weight:900}.tabs button.active{background:white;box-shadow:0 4px 14px #0d3b2b18}.count{display:inline-grid;place-items:center;min-width:19px;height:19px;border-radius:50%;background:var(--gold);margin-left:4px}
+    .panel{display:none}.panel.active{display:block}.discover{display:grid;grid-template-columns:190px 1fr;gap:32px}.filters{border-right:1px solid var(--line);padding-right:22px}.filters h3{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em}.filters button{width:100%;border:0;background:transparent;padding:9px 10px;text-align:left;border-radius:8px;font-size:13px}.filters button.active{background:#e7efe9;color:var(--forest);font-weight:900}.note{font-size:11px;color:var(--muted);margin-top:25px}
+    .results-top{font-size:12px;color:var(--muted);margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{overflow:hidden;background:white;border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;transition:.2s}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.visual{height:130px;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;background:linear-gradient(135deg,#174735,#83a470);position:relative;overflow:hidden}.visual:after{content:"";position:absolute;width:150px;height:150px;border:25px solid #ffffff13;border-radius:50%;right:-45px;bottom:-80px}.visual span{background:#092b20cc;color:white;padding:5px 8px;border-radius:99px;font-size:10px;font-weight:800}.visual b{position:absolute;left:15px;bottom:-16px;color:#ffffff30;font:500 70px Georgia,serif}.v2{background:linear-gradient(135deg,#355164,#89a79e)}.v3{background:linear-gradient(135deg,#7d4f28,#c9a164)}.v4{background:linear-gradient(135deg,#4e3f64,#9d8fa7)}.body{padding:17px;display:flex;flex-direction:column;flex:1}.dept{color:#956b18;font-size:10px;letter-spacing:.08em;font-weight:900;text-transform:uppercase}.body h3{font:600 21px/1.12 Georgia,serif;margin:7px 0}.body p{font-size:12px;color:var(--muted);min-height:57px;margin:0 0 10px}.tags{display:flex;gap:5px;flex-wrap:wrap}.tags span{font-size:10px;background:#f0f4f1;padding:4px 6px;border-radius:5px}.status{margin-top:12px;padding-top:10px;border-top:1px solid #edf0ed;font-size:10px;font-weight:900}.status.ok{color:#26704f}.status.wait{color:#a2701c}.source{display:block;color:#8b9691;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:12px}.actions button,.actions a{border:0;min-height:39px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:900}.actions button{background:var(--forest);color:white}.actions a{width:40px;border:1px solid var(--line)}
+    .map-layout{display:grid;grid-template-columns:1.6fr .7fr;gap:18px}.map{min-height:520px;border:1px solid var(--line);border-radius:20px;background:radial-gradient(circle at 30% 15%,#367b5d25,transparent 28%),radial-gradient(circle at 72% 76%,#c5953b25,transparent 38%),#dce8dc;position:relative;overflow:hidden}.map:before{content:"MAPA ESQUEMÁTICO · NO REPRESENTA RUTAS";position:absolute;left:18px;top:15px;color:#17312880;font-size:10px;font-weight:900;letter-spacing:.06em}.map:after{content:"";position:absolute;inset:12% 13% 9% 14%;border:2px dashed #1d523a28;border-radius:40% 22% 35% 20%}.label{position:absolute;color:#17312845;font-weight:900;font-size:10px;letter-spacing:.2em}.pando{top:14%;left:62%}.beni{top:43%;left:60%}.santacruz{top:78%;left:60%}.marker{position:absolute;transform:translate(-50%,-50%);z-index:2;border:0;background:transparent}.marker b{width:31px;height:31px;border-radius:50% 50% 50% 8px;background:var(--forest);color:white;display:grid;place-items:center;box-shadow:0 5px 14px #0d3b2b55}.map-list{border:1px solid var(--line);border-radius:20px;background:white;padding:22px}.map-list h3{font:600 26px Georgia,serif;margin:0 0 13px}.map-item{display:grid;grid-template-columns:29px 1fr;gap:10px;padding:11px 0;border-top:1px solid #edf0ed}.map-item>b{width:27px;height:27px;border-radius:50%;background:#e8f0ea;display:grid;place-items:center;font-size:11px}.map-item span{display:grid}.map-item strong{font-size:12px}.map-item small{font-size:10px;color:var(--muted)}
+    .planner{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}.planner-title{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.planner-title input{border:0;border-bottom:1px solid var(--line);outline:0;background:transparent;font:600 27px Georgia,serif;color:var(--ink);max-width:70%}.planner-title select{padding:6px;border:1px solid var(--line);border-radius:7px;background:white}.day{border:1px solid var(--line);background:white;border-radius:15px;padding:15px;margin-bottom:11px}.day h3{font:600 19px Georgia,serif;margin:0 0 7px}.trip-row{display:grid;grid-template-columns:29px 1fr auto auto;align-items:center;gap:8px;border-top:1px solid #edf0ed;padding:10px 0}.trip-row>b{width:27px;height:27px;background:var(--forest);color:white;border-radius:50%;display:grid;place-items:center;font-size:11px}.trip-row span{display:grid}.trip-row strong{font-size:12px}.trip-row small{font-size:10px;color:var(--muted)}.trip-row select{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:5px}.delete{border:0;background:transparent;color:#a44a3d}.empty{margin:0;background:#f5f7f5;border-radius:8px;padding:10px;text-align:center;color:#89948f;font-size:11px}.summary{background:var(--forest);color:white;border-radius:18px;padding:20px;position:sticky;top:90px}.summary h3{font:600 26px Georgia,serif;margin:0}.summary p{font-size:12px;color:#ffffffb0}.summary button{width:100%;border:0;border-radius:9px;min-height:45px;background:var(--gold);font-weight:900}.saved{margin-top:15px;padding-top:15px;border-top:1px solid #ffffff28}.saved-item{padding:9px 0;border-top:1px solid #ffffff18;display:grid}.saved-item small{color:#ffffffa0}
+    .services{background:var(--sand);padding:55px;border-radius:23px}.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:25px}.service{background:white;padding:20px;border-radius:14px}.service b{font:600 18px Georgia,serif}.service p{font-size:11px;color:var(--muted)}.service span{font-size:10px;color:#966a19;background:#fbf3df;padding:7px;display:block;border-radius:6px}
+    footer{margin-top:60px;border-top:1px solid var(--line);padding:30px max(20px,calc((100vw - 1180px)/2));display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px}
+
+    /* Autenticación */
+    .auth-screen{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#08291e,#15503b 55%,#6f6c3c);display:none;align-items:center;justify-content:center;padding:20px;overflow:auto}
+    .auth-screen.active{display:flex}
+    .auth-box{width:min(440px,100%);background:#fffdf8;border-radius:22px;padding:30px;box-shadow:0 25px 80px #0006}
+    .auth-brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+    .auth-brand .mark{flex:none}
+    .auth-brand div{display:grid;line-height:1}
+    .auth-brand b{font:600 22px Georgia,serif}
+    .auth-brand small{margin-top:5px;color:var(--leaf);font-size:9px;letter-spacing:.22em;font-weight:900}
+    .auth-box h2{font:500 32px Georgia,serif;margin:0 0 7px}
+    .auth-box>p{font-size:13px;color:var(--muted);margin:0 0 20px}
+    .auth-form{display:grid;gap:11px}
+    .auth-form label{font-size:11px;font-weight:900;color:var(--ink)}
+    .auth-form input,.auth-form select{width:100%;min-height:45px;border:1px solid var(--line);border-radius:9px;padding:0 12px;background:white;outline:0}
+    .auth-form input:focus,.auth-form select:focus{border-color:var(--leaf);box-shadow:0 0 0 3px #34765b18}
+    .auth-form button{min-height:46px;border:0;border-radius:9px;background:var(--forest);color:white;font-weight:900;margin-top:4px}
+    .auth-switch{margin-top:17px;text-align:center;font-size:12px;color:var(--muted)}
+    .auth-switch button{border:0;background:transparent;color:var(--leaf);font-weight:900;padding:0}
+    .auth-error{display:none;background:#fff0ed;color:#9b4035;border:1px solid #f0c9c3;border-radius:8px;padding:9px 11px;font-size:11px}
+    .auth-error.show{display:block}
+    .auth-note{margin-top:15px;padding-top:12px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}
+    .account-area{display:flex;align-items:center;gap:7px}
+    .account-name{font-size:11px;font-weight:900;color:var(--leaf)}
+    .account-area button{border:1px solid var(--line);background:white;padding:7px 10px;border-radius:8px;font-size:11px;font-weight:900}
+
+    @media(max-width:920px){.grid{grid-template-columns:repeat(2,1fr)}.service-grid{grid-template-columns:repeat(2,1fr)}.map-layout,.planner{grid-template-columns:1fr}.summary{position:static}nav{display:none}}
+    @media(max-width:650px){header{height:65px}.html-badge{display:none}.hero{min-height:620px}.hero h1{font-size:47px}.searchbox{grid-template-columns:1fr}.searchbox input{border-right:0;border-bottom:1px solid var(--line)}.searchbox button{min-height:48px}.stats{flex-wrap:wrap}.section-head{align-items:stretch;flex-direction:column}.tabs{overflow:auto}.discover{grid-template-columns:1fr}.filters{border-right:0;border-bottom:1px solid var(--line);padding:0 0 17px}.grid{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr}.services{padding:30px 20px}.planner-title input{font-size:22px}.trip-row{grid-template-columns:29px 1fr auto}.trip-row select{grid-column:2}.trip-row .delete{grid-column:3;grid-row:1}footer{flex-direction:column;text-align:center}.map{min-height:430px}}
+  </style>
+</head>
+<body>
+
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-box">
+      <div class="auth-brand"><span class="mark">◉</span><div><b>Oriente</b><small>BOLIVIA</small></div></div>
+
+      <div id="registerView">
+        <h2>Crear tu cuenta</h2>
+        <p>Regístrate para guardar y organizar tus viajes.</p>
+        <form class="auth-form" id="registerForm">
+          <label for="regName">Nombre completo</label>
+          <input id="regName" type="text" autocomplete="name" required>
+<input id="regEmail" type="email" placeholder="Correo electrónico" required>
+
+          <label for="regBirth">Fecha de nacimiento</label>
+          <input id="regBirth" type="date" required>
+
+          <label for="regSex">Sexo</label>
+          <select id="regSex" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Otro">Otro</option>
+            <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+          </select>
+
+          <label for="regPassword">Contraseña</label>
+          <input id="regPassword" type="password" autocomplete="new-password" minlength="6" required>
+
+          <label for="regPassword2">Confirmar contraseña</label>
+          <input id="regPassword2" type="password" autocomplete="new-password" minlength="6" required>
+
+          <div class="auth-error" id="registerError"></div>
+          <button type="submit">Crear cuenta</button>
+        </form>
+        <div class="auth-switch">¿Ya tienes una cuenta? <button type="button" id="showLogin">Iniciar sesión</button></div>
+      </div>
+
+      <div id="loginView" style="display:none">
+        <h2>Iniciar sesión</h2>
+        <p>Ingresa con tu nombre y contraseña.</p>
+        <form class="auth-form" id="loginForm">
+          <label for="loginName">Nombre</label>
+          <input id="loginName" type="text" autocomplete="username" required>
+
+          <label for="loginPassword">Contraseña</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+
+          <div class="auth-error" id="loginError"></div>
+          <button type="submit">Ingresar</button>
+        </form>
+        <div class="auth-switch">¿No tienes una cuenta? <button type="button" id="showRegister">Crear cuenta</button></div>
+      </div>
+
+      <div class="auth-note">Esta versión guarda las cuentas únicamente en este navegador. Más adelante podemos conectarla a una base de datos en la nube.</div>
+    </div>
+  </section>
+
+  <header>
+    <a class="brand" href="#inicio"><span class="mark">◉</span><span><b>Oriente</b><small>BOLIVIA</small></span></a>
+    <nav><button data-tab="destinos">Destinos</button><button data-tab="servicios">Servicios</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Planifica tu viaje</button></nav>
+    <div class="account-area" id="accountArea">
+      <button type="button" id="loginButton">Ingresar</button>
+    </div>
+  </header>
+  <section class="hero" id="inicio">
+    <div class="hero-inner"><p class="eyebrow">SANTA CRUZ · BENI · PANDO</p><h1>Tu viaje por el Oriente empieza aquí.</h1><p class="hero-desc">Descubre destinos, organiza tus días y encuentra información útil para planificar tu recorrido.</p>
+      <div class="searchbox"><input id="search" placeholder="Buscar destino, actividad o lugar"><select id="heroDepartment"><option>Todos</option><option>Santa Cruz</option><option>Beni</option><option>Pando</option></select><button id="explore">Explorar →</button></div>
+      <div class="stats"><span><b>9</b> lugares iniciales</span><span><b>3</b> departamentos</span><span>✓ Fuentes visibles</span></div>
+    </div>
+  </section>
+  <main>
+    <div class="section-head"><div><p class="kicker">EXPLORA A TU MANERA</p><h2>Un solo lugar para organizar tu viaje</h2></div><div class="tabs"><button class="active" data-tab="destinos">Descubrir</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Mi itinerario <span class="count" id="tripCount">0</span></button></div></div>
+    <section class="panel active" id="destinos"><div class="discover"><aside class="filters"><h3>Departamentos</h3><button class="active" data-dept="Todos">Todos</button><button data-dept="Santa Cruz">Santa Cruz</button><button data-dept="Beni">Beni</button><button data-dept="Pando">Pando</button><p class="note">La información está sujeta a verificación y actualización.</p></aside><div><div class="results-top" id="resultsCount"></div><div class="grid" id="cards"></div></div></div></section>
+    <section class="panel" id="mapa"><div class="map-layout"><div class="map" id="map"><span class="label pando">PANDO</span><span class="label beni">BENI</span><span class="label santacruz">SANTA CRUZ</span></div><aside class="map-list"><p class="kicker">TU SELECCIÓN</p><h3 id="mapTitle">Lugares en el mapa</h3><div id="mapItems"></div><p class="note">Esta vista es esquemática. Las rutas reales deben consultarse en un servicio de mapas.</p></aside></div></section>
+    <section class="panel" id="itinerario"><div class="planner"><div><div class="planner-title"><input id="tripName" value="Mi viaje por el Oriente" aria-label="Nombre del viaje"><label>Días <select id="days"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label></div><div id="daysContainer"></div></div><aside class="summary"><p class="kicker">RESUMEN DEL VIAJE</p><h3 id="summaryTitle">0 lugares organizados</h3><p>Los datos se guardan únicamente en este navegador.</p><button id="saveTrip">Guardar itinerario</button><div class="saved"><b>Mis viajes guardados</b><div id="savedTrips"></div></div></aside></div></section>
+    <section class="panel" id="servicios"><div class="services"><p class="kicker">DIRECTORIO TURÍSTICO</p><h2>Servicios pendientes de verificación</h2><p>No se muestran empresas, teléfonos ni precios sin una fuente comprobable.</p><div class="service-grid"><div class="service"><b>Alojamiento</b><p>Hoteles, hostales y cabañas.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Agencias y operadores</b><p>Tours y experiencias locales.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Transporte</b><p>Rutas y puntos de salida.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Gastronomía</b><p>Restaurantes y cocina regional.</p><span>Pendiente de registros verificados</span></div></div></div></section>
+  </main>
+  <footer><span>Turismo del Oriente Boliviano</span><span>Santa Cruz · Beni · Pando</span><span>Guía informativa, sin reservas ni pagos.</span></footer>
+  <script>
+    const destinations=[
+      {id:"samaipata",name:"Samaipata",dept:"Santa Cruz",type:"Destino",cats:["Cultura","Naturaleza","Historia"],desc:"Valles, patrimonio y naturaleza en una de las puertas turísticas del occidente cruceño.",status:"Verificado",source:"Gobierno Municipal de Samaipata",x:37,y:78},
+      {id:"amboro",name:"Parque Nacional Amboró",dept:"Santa Cruz",type:"Área protegida",cats:["Naturaleza","Fauna","Aventura"],desc:"Área protegida de gran diversidad biológica, con accesos que requieren planificación previa.",status:"Verificado",source:"SERNAP",x:39,y:70},
+      {id:"misiones",name:"Misiones Jesuíticas de Chiquitos",dept:"Santa Cruz",type:"Circuito cultural",cats:["Cultura","Historia"],desc:"Circuito patrimonial que conecta poblaciones de la Chiquitania y su legado misional.",status:"Verificado",source:"UNESCO / fuentes institucionales",x:63,y:69},
+      {id:"rurrenabaque",name:"Rurrenabaque",dept:"Beni",type:"Destino",cats:["Naturaleza","Fauna","Aventura"],desc:"Punto de partida para experiencias de selva y pampas en la Amazonía boliviana.",status:"Verificado",source:"Fuentes institucionales",x:29,y:37},
+      {id:"yacuma",name:"Pampas del Yacuma",dept:"Beni",type:"Experiencia natural",cats:["Naturaleza","Fauna","Ríos"],desc:"Experiencia vinculada a humedales, navegación y observación responsable de fauna.",status:"Pendiente de verificación",source:"Dato pendiente de actualización",x:40,y:33},
+      {id:"madidi",name:"Acceso al Madidi desde Rurrenabaque",dept:"Beni",type:"Acceso vinculado",cats:["Naturaleza","Fauna","Aventura"],desc:"Referencia de acceso turístico; la ubicación territorial se presenta por separado.",status:"Verificado",source:"SERNAP",x:25,y:43},
+      {id:"cobija",name:"Cobija",dept:"Pando",type:"Destino urbano",cats:["Cultura","Gastronomía","Ríos"],desc:"Capital amazónica y punto de conexión para conocer la identidad y paisajes de Pando.",status:"Verificado",source:"Fuentes institucionales",x:25,y:13},
+      {id:"manuripi",name:"Reserva Nacional Manuripi",dept:"Pando",type:"Área protegida",cats:["Naturaleza","Fauna","Ríos"],desc:"Reserva amazónica de Pando cuyo acceso debe planificarse con información oficial.",status:"Verificado",source:"SERNAP",x:40,y:17},
+      {id:"tahumanu",name:"Tahumanu",dept:"Pando",type:"Contenido en validación",cats:["Naturaleza","Ríos"],desc:"La ficha se publicará cuando se precise y verifique el circuito o atractivo.",status:"Pendiente de verificación",source:"Dato pendiente de actualización",x:51,y:11}
+    ];
+    let activeDept="Todos",query="",trip=JSON.parse(localStorage.getItem("oriente_trip")||'[{"id":"samaipata","day":1},{"id":"amboro","day":2}]');
+    const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+    function showTab(id){$$(".panel").forEach(p=>p.classList.toggle("active",p.id===id));$$(".tabs button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));if(id==="mapa")renderMap();if(id==="itinerario")renderPlanner();document.querySelector("main").scrollIntoView({behavior:"smooth"})}
+    $$("[data-tab]").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+    function renderCards(){const list=destinations.filter(d=>(activeDept==="Todos"||d.dept===activeDept)&&(`${d.name} ${d.dept} ${d.cats.join(" ")}`.toLowerCase().includes(query.toLowerCase())));$("#resultsCount").textContent=`${list.length} lugares encontrados`;$("#cards").innerHTML=list.map((d,i)=>`<article class="card"><div class="visual v${i%4+1}"><span>${d.type}</span><b>${String(i+1).padStart(2,"0")}</b></div><div class="body"><span class="dept">⌖ ${d.dept}</span><h3>${d.name}</h3><p>${d.desc}</p><div class="tags">${d.cats.map(c=>`<span>${c}</span>`).join("")}</div><div class="status ${d.status==="Verificado"?"ok":"wait"}">${d.status==="Verificado"?"✓ ":""}${d.status}<small class="source">Fuente: ${d.source}</small></div><div class="actions"><button onclick="addTrip('${d.id}')">＋ Agregar al viaje</button><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.name+", Bolivia")}">↗</a></div></div></article>`).join("")}
+    $$("[data-dept]").forEach(b=>b.onclick=()=>{activeDept=b.dataset.dept;$$("[data-dept]").forEach(x=>x.classList.toggle("active",x===b));$("#heroDepartment").value=activeDept;renderCards()});
+    $("#search").oninput=e=>{query=e.target.value;renderCards()};$("#heroDepartment").onchange=e=>{activeDept=e.target.value;$$("[data-dept]").forEach(x=>x.classList.toggle("active",x.dataset.dept===activeDept));renderCards()};$("#explore").onclick=()=>showTab("destinos");
+    function addTrip(id){if(!trip.some(x=>x.id===id))trip.push({id,day:1});saveDraft();showTab("itinerario")}
+    function saveDraft(){localStorage.setItem("oriente_trip",JSON.stringify(trip));$("#tripCount").textContent=trip.length}
+    function renderMap(){const points=trip.length?trip:destinations.slice(0,5).map((d,i)=>({id:d.id,day:1}));$("#map").querySelectorAll(".marker").forEach(x=>x.remove());points.forEach((item,i)=>{const d=destinations.find(x=>x.id===item.id);$("#map").insertAdjacentHTML("beforeend",`<button class="marker" style="left:${d.x}%;top:${d.y}%" title="${d.name}"><b>${i+1}</b></button>`)});$("#mapTitle").textContent=`${points.length} lugares en el mapa`;$("#mapItems").innerHTML=points.map((item,i)=>{const d=destinations.find(x=>x.id===item.id);return `<div class="map-item"><b>${i+1}</b><span><strong>${d.name}</strong><small>${d.dept} · ${d.type}</small></span></div>`}).join("")}
+    function renderPlanner(){const n=+$("#days").value;$("#daysContainer").innerHTML=Array.from({length:n},(_,i)=>i+1).map(day=>{const items=trip.filter(x=>x.day===day);return `<section class="day"><h3>Día ${day}</h3>${items.length?items.map((it,idx)=>{const d=destinations.find(x=>x.id===it.id);return `<div class="trip-row"><b>${trip.findIndex(x=>x.id===it.id)+1}</b><span><strong>${d.name}</strong><small>${d.dept} · ${d.type}</small></span><select onchange="moveItem('${it.id}',this.value)">${Array.from({length:n},(_,j)=>`<option value="${j+1}" ${it.day===j+1?"selected":""}>Día ${j+1}</option>`).join("")}</select><button class="delete" onclick="removeItem('${it.id}')">✕</button></div>`}).join(""):'<p class="empty">Agrega un lugar o muévelo a este día.</p>'}</section>`}).join("");$("#summaryTitle").textContent=`${trip.length} lugares organizados`;$("#tripCount").textContent=trip.length}
+    window.moveItem=(id,day)=>{trip=trip.map(x=>x.id===id?{...x,day:+day}:x);saveDraft();renderPlanner()};window.removeItem=id=>{trip=trip.filter(x=>x.id!==id);saveDraft();renderPlanner()};
+    $("#days").onchange=()=>{const n=+$("#days").value;trip=trip.map(x=>({...x,day:Math.min(x.day,n)}));saveDraft();renderPlanner()};
+    function renderSaved(){const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");$("#savedTrips").innerHTML=saved.length?saved.slice(0,5).map(x=>`<div class="saved-item"><b>${x.name}</b><small>${x.days} días · ${x.items.length} lugares</small></div>`).join(""):'<p>Aún no tienes viajes guardados.</p>'}
+    $("#saveTrip").onclick=()=>{const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");saved.unshift({id:Date.now(),name:$("#tripName").value||"Mi viaje",days:+$("#days").value,items:trip});localStorage.setItem("oriente_saved",JSON.stringify(saved.slice(0,10)));renderSaved();$("#saveTrip").textContent="✓ Itinerario guardado";setTimeout(()=>$("#saveTrip").textContent="Guardar itinerario",1800)};
+
+    /* Sistema de registro e inicio de sesión */
+    const BACKEND_URL="https://script.google.com/macros/s/AKfycbxt1bmeQfWT8PtAYJ1eDmG9D-qnLNHLtZn1aJMbX82rCvlxgNJpF9mJMoudKb9y69fb/exec";
+    const AUTH_KEY="oriente_users", SESSION_KEY="oriente_session";
+    const getUsers=()=>JSON.parse(localStorage.getItem(AUTH_KEY)||"[]");
+    const setUsers=users=>localStorage.setItem(AUTH_KEY,JSON.stringify(users));
+    const normalizeName=name=>name.trim().replace(/\s+/g," ").toLowerCase();
+    const calculateAge=birth=>{
+      const b=new Date(birth+"T00:00:00"), t=new Date();
+      let age=t.getFullYear()-b.getFullYear();
+      const m=t.getMonth()-b.getMonth();
+      if(m<0||(m===0&&t.getDate()<b.getDate())) age--;
+      return age;
+    };
+    const getSession=()=>JSON.parse(localStorage.getItem(SESSION_KEY)||"null");
+    const setSession=user=>user?localStorage.setItem(SESSION_KEY,JSON.stringify(user)):localStorage.removeItem(SESSION_KEY);
+
+    function showAuth(view="login"){
+      $("#authScreen").classList.add("active");
+      $("#registerView").style.display=view==="register"?"block":"none";
+      $("#loginView").style.display=view==="login"?"block":"none";
+      $("#registerError").classList.remove("show");
+      $("#loginError").classList.remove("show");
+    }
+    function hideAuth(){ $("#authScreen").classList.remove("active"); }
+
+    function renderAccount(){
+      const session=getSession(), area=$("#accountArea");
+      if(!session){
+        area.innerHTML='<button type="button" id="loginButton">Ingresar</button>';
+        $("#loginButton").onclick=()=>showAuth("login");
+        return;
+      }
+      const firstName=session.name.split(" ")[0];
+      area.innerHTML=`<span class="account-name">Hola, ${firstName}</span><button type="button" id="logoutButton">Salir</button>`;
+      $("#logoutButton").onclick=()=>{
+        setSession(null);
+        renderAccount();
+      };
+    }
+
+    $("#showLogin").onclick=()=>showAuth("login");
+    $("#showRegister").onclick=()=>showAuth("register");
+    $("#loginButton").onclick=()=>showAuth("login");
+
+    $("#registerForm").onsubmit=async e=>{
+      e.preventDefault();
+      const name=$("#regName").value.trim().replace(/\s+/g," "),birth=$("#regBirth").value,sex=$("#regSex").value,password=$("#regPassword").value,password2=$("#regPassword2").value,error=$("#registerError");
+      if(name.length<2){error.textContent="Ingresa un nombre válido.";error.classList.add("show");return}
+      if(!birth){error.textContent="Selecciona tu fecha de nacimiento.";error.classList.add("show");return}
+      const age=calculateAge(birth);
+      if(age<13||age>120){error.textContent="La fecha de nacimiento no parece válida.";error.classList.add("show");return}
+      if(password.length<6){error.textContent="La contraseña debe tener al menos 6 caracteres.";error.classList.add("show");return}
+      if(password!==password2){error.textContent="Las contraseñas no coinciden.";error.classList.add("show");return}
+      if(BACKEND_URL){
+        try{
+          const r=await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"register",name,birth,sex,email:regEmail.value,password})});
+          const d=await r.json();
+          if(!d.ok){error.textContent=d.message||"No se pudo crear la cuenta.";error.classList.add("show");return}
+          setSession({id:d.user.id,name:d.user.name,age:d.user.age,sex:d.user.sex,token:d.user.token});$("#registerForm").reset();hideAuth();renderAccount();return;
+        }catch(err){error.textContent="No se pudo conectar con la base de datos.";error.classList.add("show");return}
+      }
+      const users=getUsers();
+      if(users.some(u=>u.key===normalizeName(name))){error.textContent="Ya existe una cuenta con ese nombre.";error.classList.add("show");return}
+      const user={id:Date.now(),key:normalizeName(name),name,birth,age,sex,password};users.push(user);setUsers(users);setSession({id:user.id,name:user.name,age:user.age,sex:user.sex});$("#registerForm").reset();hideAuth();renderAccount();
+    };
+
+    $("#loginForm").onsubmit=async e=>{
+      e.preventDefault();
+      const name=$("#loginName").value,password=$("#loginPassword").value,error=$("#loginError");
+      if(BACKEND_URL){
+        try{
+          const r=await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"login",name,password})});
+          const d=await r.json();
+          if(!d.ok){error.textContent=d.message||"Nombre o contraseña incorrectos.";error.classList.add("show");return}
+          setSession({id:d.user.id,name:d.user.name,age:d.user.age,sex:d.user.sex,token:d.user.token});$("#loginForm").reset();hideAuth();renderAccount();return;
+        }catch(err){error.textContent="No se pudo conectar con la base de datos.";error.classList.add("show");return}
+      }
+      const user=getUsers().find(u=>u.key===normalizeName(name)&&u.password===password);
+      if(!user){error.textContent="Nombre o contraseña incorrectos.";error.classList.add("show");return}
+      setSession({id:user.id,name:user.name,age:user.age,sex:user.sex});$("#loginForm").reset();hideAuth();renderAccount();
+    };
+
+    renderAccount();
+
+    renderCards();saveDraft();renderMap();renderPlanner();renderSaved();
+  </script>
+</body>
+</html>
