@@ -453,27 +453,86 @@
     $("#showRegister").onclick=()=>showAuth("register");
     $("#loginButton").onclick=()=>showAuth("login");
 
-    $("#registerForm").onsubmit=async e=>{
-      e.preventDefault();
-      const name=$("#regName").value.trim().replace(/\s+/g," "),birth=$("#regBirth").value,sex=$("#regSex").value,password=$("#regPassword").value,password2=$("#regPassword2").value,error=$("#registerError");
-      if(name.length<2){error.textContent="Ingresa un nombre válido.";error.classList.add("show");return}
-      if(!birth){error.textContent="Selecciona tu fecha de nacimiento.";error.classList.add("show");return}
-      const age=calculateAge(birth);
-      if(age<13||age>120){error.textContent="La fecha de nacimiento no parece válida.";error.classList.add("show");return}
-      if(password.length<6){error.textContent="La contraseña debe tener al menos 6 caracteres.";error.classList.add("show");return}
-      if(password!==password2){error.textContent="Las contraseñas no coinciden.";error.classList.add("show");return}
-      if(BACKEND_URL){
-        try{
-          const r=await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"register",name,birth,sex,email:regEmail.value,password})});
-          const d=await r.json();
-          if(!d.ok){error.textContent=d.message||"No se pudo crear la cuenta.";error.classList.add("show");return}
-          setSession({id:d.user.id,name:d.user.name,age:d.user.age,sex:d.user.sex,token:d.user.token});$("#registerForm").reset();hideAuth();renderAccount();return;
-        }catch(err){error.textContent="No se pudo conectar con la base de datos.";error.classList.add("show");return}
+    
+$("#registerForm").onsubmit=async e=>{
+  e.preventDefault();
+
+  const submitButton=e.currentTarget.querySelector('button[type="submit"]');
+  if(submitButton.disabled)return;
+
+  const name=$("#regName").value.trim().replace(/\s+/g," "),
+    birth=$("#regBirth").value,
+    sex=$("#regSex").value,
+    password=$("#regPassword").value,
+    password2=$("#regPassword2").value,
+    error=$("#registerError");
+
+  if(name.length<2){error.textContent="Ingresa un nombre válido.";error.classList.add("show");return}
+  if(!birth){error.textContent="Selecciona tu fecha de nacimiento.";error.classList.add("show");return}
+
+  const age=calculateAge(birth);
+
+  if(age<13||age>120){error.textContent="La fecha de nacimiento no parece válida.";error.classList.add("show");return}
+  if(password.length<6){error.textContent="La contraseña debe tener al menos 6 caracteres.";error.classList.add("show");return}
+  if(password!==password2){error.textContent="Las contraseñas no coinciden.";error.classList.add("show");return}
+
+  submitButton.disabled=true;
+  submitButton.textContent="Creando cuenta...";
+
+  const restoreButton=()=>{
+    submitButton.disabled=false;
+    submitButton.textContent="Crear cuenta";
+  };
+
+  if(BACKEND_URL){
+    try{
+      const r=await fetch(BACKEND_URL,{
+        method:"POST",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify({action:"register",name,birth,sex,email:regEmail.value,password})
+      });
+
+      const d=await r.json();
+
+      if(!d.ok){
+        error.textContent=d.message||"No se pudo crear la cuenta.";
+        error.classList.add("show");
+        restoreButton();
+        return;
       }
-      const users=getUsers();
-      if(users.some(u=>u.key===normalizeName(name))){error.textContent="Ya existe una cuenta con ese nombre.";error.classList.add("show");return}
-      const user={id:Date.now(),key:normalizeName(name),name,birth,age,sex,password};users.push(user);setUsers(users);setSession({id:user.id,name:user.name,age:user.age,sex:user.sex});$("#registerForm").reset();hideAuth();renderAccount();
-    };
+
+      setSession({id:d.user.id,name:d.user.name,age:d.user.age,sex:d.user.sex,token:d.user.token});
+      $("#registerForm").reset();
+      hideAuth();
+      renderAccount();
+      return;
+
+    }catch(err){
+      error.textContent="No se pudo conectar con la base de datos.";
+      error.classList.add("show");
+      restoreButton();
+      return;
+    }
+  }
+
+  const users=getUsers();
+
+  if(users.some(u=>u.key===normalizeName(name))){
+    error.textContent="Ya existe una cuenta con ese nombre.";
+    error.classList.add("show");
+    restoreButton();
+    return;
+  }
+
+  const user={id:Date.now(),key:normalizeName(name),name,birth,age,sex,password};
+  users.push(user);
+  setUsers(users);
+  setSession({id:user.id,name:user.name,age:user.age,sex:user.sex});
+  $("#registerForm").reset();
+  hideAuth();
+  renderAccount();
+};
+
 
     $("#loginForm").onsubmit=async e=>{
       e.preventDefault();
