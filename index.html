@@ -457,8 +457,12 @@
 $("#registerForm").onsubmit=async e=>{
   e.preventDefault();
 
-  const submitButton=e.currentTarget.querySelector('button[type="submit"]');
-  if(submitButton.disabled)return;
+const form=e.currentTarget;
+if(form.dataset.submitting==="true")return;
+form.dataset.submitting="true";
+
+const submitButton=form.querySelector('button[type="submit"]');
+submitButton.disabled=true;
 
   const name=$("#regName").value.trim().replace(/\s+/g," "),
     birth=$("#regBirth").value,
@@ -467,22 +471,21 @@ $("#registerForm").onsubmit=async e=>{
     password2=$("#regPassword2").value,
     error=$("#registerError");
 
-  if(name.length<2){error.textContent="Ingresa un nombre válido.";error.classList.add("show");return}
-  if(!birth){error.textContent="Selecciona tu fecha de nacimiento.";error.classList.add("show");return}
-
+  if(name.length<2){error.textContent="Ingresa un nombre válido.";error.classList.add("show");restoreButton();return}
+  if(!birth){error.textContent="Selecciona tu fecha de nacimiento.";error.classList.add("show");restoreButton();return}
   const age=calculateAge(birth);
 
-  if(age<13||age>120){error.textContent="La fecha de nacimiento no parece válida.";error.classList.add("show");return}
-  if(password.length<6){error.textContent="La contraseña debe tener al menos 6 caracteres.";error.classList.add("show");return}
-  if(password!==password2){error.textContent="Las contraseñas no coinciden.";error.classList.add("show");return}
-
+  if(age<13||age>120){error.textContent="La fecha de nacimiento no parece válida.";error.classList.add("show");restoreButton();return}
+  if(password.length<6){error.textContent="La contraseña debe tener al menos 6 caracteres.";error.classList.add("show");restoreButton();return}
+ if(password!==password2){error.textContent="Las contraseñas no coinciden.";error.classList.add("show");restoreButton();return}
   submitButton.disabled=true;
   submitButton.textContent="Creando cuenta...";
 
   const restoreButton=()=>{
-    submitButton.disabled=false;
-    submitButton.textContent="Crear cuenta";
-  };
+  form.dataset.submitting="false";
+  submitButton.disabled=false;
+  submitButton.textContent="Crear cuenta";
+};
 
   if(BACKEND_URL){
     try{
