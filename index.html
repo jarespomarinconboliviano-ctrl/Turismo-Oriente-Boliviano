@@ -146,7 +146,7 @@
 
   <header>
     <a class="brand" href="#inicio"><span class="mark">◉</span><span><b>Oriente</b><small>BOLIVIA</small></span></a>
-    <nav><button data-tab="destinos">Destinos</button><button data-tab="servicios">Servicios</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Mi itinerario</button></nav>
+    <nav><button data-tab="destinos">Destinos</button><button data-tab="servicios">Servicios</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Mi itinerario</button><button data-tab="reservas">Reservar</button></nav>
     <div class="account-area" id="accountArea">
       <button type="button" id="loginButton">Ingresar</button>
     </div>
@@ -158,12 +158,53 @@
     </div>
   </section>
   <main>
-    <div class="section-head"><div><p class="kicker">EXPLORA A TU MANERA</p><h2>Un solo lugar para organizar tu viaje</h2></div><div class="tabs"><button class="active" data-tab="destinos">Descubrir</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Mi itinerario <span class="count" id="tripCount">0</span></button></div></div>
+    <div class="section-head"><div><p class="kicker">EXPLORA A TU MANERA</p><h2>Un solo lugar para organizar tu viaje</h2></div><div class="tabs"><button class="active" data-tab="destinos">Descubrir</button><button data-tab="mapa">Mapa</button><button data-tab="itinerario">Mi itinerario <span class="count" id="tripCount">0</span></button><button data-tab="reservas">Reservar</button></div></div>
     <section class="panel active" id="destinos"><div class="discover"><aside class="filters"><h3>Departamentos</h3><button class="active" data-dept="Todos">Todos</button><button data-dept="Santa Cruz">Santa Cruz</button><button data-dept="Beni">Beni</button><button data-dept="Pando">Pando</button><p class="note">La información está sujeta a verificación y actualización.</p></aside><div><div class="results-top" id="resultsCount"></div><div class="grid" id="cards"></div></div></div></section>
     <section class="panel" id="mapa"><div class="map-layout"><div class="map" id="map"><span class="label pando">PANDO</span><span class="label beni">BENI</span><span class="label santacruz">SANTA CRUZ</span></div><aside class="map-list"><p class="kicker">TU SELECCIÓN</p><h3 id="mapTitle">Lugares en el mapa</h3><div id="mapItems"></div><p class="note">Esta vista es esquemática. Las rutas reales deben consultarse en un servicio de mapas.</p></aside></div></section>
     <section class="panel" id="itinerario"><div class="planner"><div><div class="planner-title"><input id="tripName" value="Mi viaje por el Oriente" aria-label="Nombre del viaje"><label>Días <select id="days"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label></div><div id="daysContainer"></div></div><aside class="summary"><p class="kicker">RESUMEN DEL VIAJE</p><h3 id="summaryTitle">0 lugares organizados</h3><p>Los datos se guardan únicamente en este navegador.</p><button id="saveTrip">Guardar itinerario</button><div class="saved"><b>Mis viajes guardados</b><div id="savedTrips"></div></div></aside></div></section>
     <section class="panel" id="servicios"><div class="services"><p class="kicker">DIRECTORIO TURÍSTICO</p><h2>Servicios pendientes de verificación</h2><p>No se muestran empresas, teléfonos ni precios sin una fuente comprobable.</p><div class="service-grid"><div class="service"><b>Alojamiento</b><p>Hoteles, hostales y cabañas.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Agencias y operadores</b><p>Tours y experiencias locales.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Transporte</b><p>Rutas y puntos de salida.</p><span>Pendiente de registros verificados</span></div><div class="service"><b>Gastronomía</b><p>Restaurantes y cocina regional.</p><span>Pendiente de registros verificados</span></div></div></div></section>
-    <section class="panel" id="informacionDestino">
+    <section class="panel" id="reservas">
+  <div class="services">
+    <p class="kicker">PLANIFICA TU EXPERIENCIA</p>
+    <h2>Solicitud de reserva</h2>
+    <p>Completa tus datos y cuéntanos qué servicio turístico te interesa. Recibirás una confirmación por correo cuando tu solicitud haya sido registrada.</p>
+
+    <form class="auth-form" id="reservationForm">
+      <label for="reservationName">Nombre completo</label>
+      <input id="reservationName" type="text" required>
+
+      <label for="reservationEmail">Correo electrónico</label>
+      <input id="reservationEmail" type="email" required>
+
+      <label for="reservationType">Tipo de servicio</label>
+      <select id="reservationType" required>
+        <option value="">Selecciona un servicio</option>
+        <option value="Alojamiento">Alojamiento</option>
+        <option value="Tour o excursión">Tour o excursión</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Otro">Otro</option>
+      </select>
+
+      <label for="reservationPlace">Lugar o destino</label>
+      <input id="reservationPlace" type="text" required>
+
+      <label for="reservationDate">Fecha del viaje</label>
+      <input id="reservationDate" type="date" required>
+
+      <label for="reservationMessage">Mensaje adicional</label>
+      <textarea id="reservationMessage" rows="4" required></textarea>
+
+      <div style="display:none">
+        <label for="reservationWebsite">No completar</label>
+        <input id="reservationWebsite" type="text" autocomplete="off" tabindex="-1">
+      </div>
+
+      <div class="auth-error" id="reservationStatus"></div>
+
+      <button type="submit" id="reservationButton">Enviar solicitud</button>
+    </form>
+  </div>
+</section><section class="panel" id="informacionDestino">
       <div class="directory-head"><div><p class="kicker">GUÍA PRÁCTICA DEL DESTINO</p><h2 id="directoryTitle">Información del destino</h2><p class="directory-intro" id="directoryDescription">Consulta en un mismo lugar opciones de hospedaje, transporte y tours. La página reúne información y enlaza con los proveedores; no vende ni reserva servicios.</p></div><button class="directory-back" id="backToDestinations">← Volver a destinos</button></div>
       <div id="directoryContent"></div>
       <p class="directory-disclaimer">Los proveedores y enlaces publicados deben verificarse antes de viajar. Los precios, horarios y disponibilidad pueden cambiar; consulta directamente con cada empresa. Cuando no hay datos comprobables, se indica expresamente en lugar de inventar opciones.</p>
@@ -440,7 +481,78 @@
     };
 
     renderAccount();
+    /* Envío de solicitudes de reserva */
+    const reservationForm = $("#reservationForm");
 
+    reservationForm.onsubmit = async e => {
+      e.preventDefault();
+
+      const button = $("#reservationButton");
+      const status = $("#reservationStatus");
+
+      const name = $("#reservationName").value.trim();
+      const email = $("#reservationEmail").value.trim();
+      const type = $("#reservationType").value;
+      const place = $("#reservationPlace").value.trim();
+      const date = $("#reservationDate").value;
+      const message = $("#reservationMessage").value.trim();
+      const website = $("#reservationWebsite").value.trim();
+
+      if (website) return;
+
+      button.disabled = true;
+      button.textContent = "Enviando...";
+      status.textContent = "";
+      status.classList.remove("show");
+
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            action: "reservation",
+            name,
+            email,
+            type,
+            place,
+            date,
+            message,
+            website
+          })
+        });
+
+        const data = await response.json();
+
+        if (!data.ok) {
+          throw new Error(data.message || "No se pudo registrar la solicitud.");
+        }
+
+        status.style.background = "#e8f5eb";
+        status.style.color = "#24633b";
+        status.style.borderColor = "#b9ddc2";
+        status.textContent = data.emailSent
+          ? "¡Solicitud registrada! Enviamos una confirmación a tu correo."
+          : "La solicitud se guardó, pero no se pudo enviar el correo. Inténtalo nuevamente más tarde.";
+        status.classList.add("show");
+
+        if (data.emailSent) {
+          reservationForm.reset();
+        }
+
+      } catch (error) {
+        status.style.background = "#fff0ed";
+        status.style.color = "#9b4035";
+        status.style.borderColor = "#f0c9c3";
+        status.textContent = error.message || "Ocurrió un error al enviar la solicitud.";
+        status.classList.add("show");
+
+      } finally {
+        button.disabled = false;
+        button.textContent = "Enviar solicitud";
+      }
+    };
     renderCards();saveDraft();renderMap();renderPlanner();renderSaved();
   </script>
 </body>
