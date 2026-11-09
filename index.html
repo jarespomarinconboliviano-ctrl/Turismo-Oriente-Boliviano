@@ -259,8 +259,7 @@
     window.moveItem=(id,day)=>{trip=trip.map(x=>x.id===id?{...x,day:+day}:x);saveDraft();renderPlanner()};window.removeItem=id=>{trip=trip.filter(x=>x.id!==id);saveDraft();renderPlanner()};
     $("#days").onchange=()=>{const n=+$("#days").value;trip=trip.map(x=>({...x,day:Math.min(x.day,n)}));saveDraft();renderPlanner()};
     function renderSaved(){const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");$("#savedTrips").innerHTML=saved.length?saved.slice(0,5).map(x=>`<div class="saved-item"><b>${x.name}</b><small>${x.days} días · ${x.items.length} lugares</small></div>`).join(""):'<p>Aún no tienes viajes guardados.</p>'}
-    $("#saveTrip").onclick=()=>{const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");saved.unshift({id:Date.now(),name:$("#tripName").value||"Mi viaje",days:+$("#days").value,items:trip});localStorage.setItem("oriente_saved",JSON.stringify(saved.slice(0,10)));renderSaved();$("#saveTrip").textContent="✓ Itinerario guardado";setTimeout(()=>$("#saveTrip").textContent="Guardar itinerario",1800)};
-
+    $("#saveTrip").onclick=()=>{if(trip.length===0){alert("Itinerario vacío. Agrega al menos un destino para guardar tu viaje.");return}const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");saved.unshift({id:Date.now(),name:$("#tripName").value||"Mi viaje",days:+$("#days").value,items:trip});localStorage.setItem("oriente_saved",JSON.stringify(saved.slice(0,10)));renderSaved();$("#saveTrip").textContent="✓ Itinerario guardado";setTimeout(()=>$("#saveTrip").textContent="Guardar itinerario",1800)};
     /* Directorio informativo: solo se publican proveedores con referencias localizables */
     const directoryData={
       samaipata:{
