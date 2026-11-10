@@ -1030,6 +1030,38 @@ website: website
     fill: currentColor;
   }
 
+/* Botón de ayuda - Manual de usuario */
+.ayuda-float {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 17px;
+    border-radius: 999px;
+    background: #173D32;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.ayuda-float:hover {
+    background: #245B49;
+    transform: translateY(-3px);
+}
+
+.ayuda-float svg {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
   @media (max-width: 480px) {
     .whatsapp-float {
       right: 14px;
@@ -1051,6 +1083,16 @@ website: website
     <path d="M12.04 2C6.53 2 2.05 6.48 2.05 11.99c0 1.76.46 3.48 1.34 5L2 22l5.16-1.35a9.96 9.96 0 0 0 4.88 1.27h.01c5.51 0 9.99-4.48 10-9.99a9.93 9.93 0 0 0-2.93-7.07A9.93 9.93 0 0 0 12.04 2zm0 18.2h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.06.8.82-2.98-.2-.31a8.18 8.18 0 0 1-1.26-4.39c0-4.52 3.68-8.2 8.2-8.2a8.15 8.15 0 0 1 5.8 2.4 8.15 8.15 0 0 1 2.4 5.81c0 4.52-3.68 8.2-8.2 8.2zm4.5-6.14c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.65.81-.8.98-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.25-1.5-1.4-1.75-.15-.25-.02-.39.11-.52.11-.11.25-.3.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.87-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.42 1.43.54.6.19 1.15.16 1.58.1.48-.07 1.48-.61 1.69-1.2.21-.59.21-1.1.15-1.2-.06-.1-.23-.17-.48-.3z"/>
   </svg>
   <span>Contáctanos por WhatsApp</span>
+</a>
+<a class="ayuda-float"
+   href="https://jarespomarinconboliviano-ctrl.github.io/Turismo-Oriente-Boliviano/MANUAL%20ORIENTE%20BOLIVIANO.pdf"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Abrir manual de usuario">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-.1-13a3.1 3.1 0 0 0-3.1 3.1h2a1.1 1.1 0 1 1 2.2 0c0 .8-.6 1.1-1.3 1.7-.7.5-1.2 1.1-1.2 2.2v.5h2v-.4c0-.4.2-.7.7-1.1 1-.8 1.8-1.5 1.8-2.9A3.1 3.1 0 0 0 11.9 7zm-.9 9v2h2v-2h-2z"/>
+  </svg>
+  <span>Ayuda</span>
 </a>
 </body>
 </html>
