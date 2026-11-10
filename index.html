@@ -11,7 +11,36 @@
     header{height:74px;padding:0 max(20px,calc((100vw - 1180px)/2));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;background:#fffdf8f5;border-bottom:1px solid #17312815;backdrop-filter:blur(14px)}
     .brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:50% 50% 50% 15%;background:var(--forest);color:#f5c85d;display:grid;place-items:center;font-weight:900;font-size:21px;transform:rotate(-8deg)}.brand span{display:grid;line-height:1}.brand b{font:600 20px Georgia,serif}.brand small{margin-top:5px;color:var(--leaf);font-size:9px;letter-spacing:.22em;font-weight:900}
     nav{display:flex;gap:5px}nav button{border:0;background:transparent;padding:10px 13px;border-radius:20px;font-weight:800;font-size:13px}nav button:hover{background:#e9f0eb}.html-badge{padding:8px 12px;border-radius:99px;background:#e9f0eb;font-size:12px;font-weight:900}
-    .hero{min-height:570px;color:white;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(90deg,#08291ef2 0%,#15503bcf 48%,#6f6c3c60 100%),url("https://commons.wikimedia.org/wiki/Special:FilePath/Paisaje%20tropical%20en%20Rurrenabaque%2C%20Bolivia.jpg?width=1800") center 48%/cover no-repeat}
+    .hero{
+  min-height:620px;
+  color:white;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  background:#102f25;
+}
+
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    90deg,
+    rgba(4,25,18,.88) 0%,
+    rgba(8,39,28,.65) 48%,
+    rgba(8,39,28,.20) 100%
+  );
+  z-index:1;
+}
     .hero:before{content:"";position:absolute;inset:auto -8% -43% 25%;height:85%;border-radius:50% 45% 0 0;background:linear-gradient(160deg,#32795d,#123f30);transform:rotate(-8deg);opacity:.8}.hero:after{content:"";position:absolute;width:50vw;height:16vw;right:-4vw;bottom:8vw;border:2.5vw solid #ffffff10;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-12deg)}
     .hero-inner{width:min(1180px,calc(100% - 40px));margin:auto;position:relative;z-index:1;padding:70px 0}.eyebrow,.kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:900;color:#efc872;margin:0 0 14px}.hero h1{max-width:760px;margin:0;font:500 clamp(45px,6vw,78px)/.98 Georgia,serif;letter-spacing:-.045em}.hero-desc{max-width:650px;color:#ffffffd0;font-size:18px;margin:23px 0 30px}
     .searchbox{width:min(900px,100%);display:grid;grid-template-columns:1.4fr .7fr auto;gap:8px;padding:8px;background:white;color:var(--ink);border-radius:17px;box-shadow:0 20px 60px #0004}.searchbox input,.searchbox select{min-height:52px;border:0;outline:0;padding:0 15px;background:white}.searchbox input{border-right:1px solid var(--line)}.searchbox button{border:0;border-radius:11px;padding:0 24px;background:var(--gold);font-weight:900}.stats{display:flex;gap:28px;margin-top:27px}.stats span{display:flex;gap:7px;align-items:center;color:#ffffffb8;font-size:12px}.stats b{color:white;font:600 24px Georgia,serif}
