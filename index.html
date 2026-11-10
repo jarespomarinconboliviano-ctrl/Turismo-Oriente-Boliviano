@@ -331,7 +331,88 @@
     function addTrip(id){if(!trip.some(x=>x.id===id))trip.push({id,day:1});saveDraft();showTab("itinerario")}    
     function reserveFromTrip(id,date){const d=destinations.find(x=>x.id===id);if(!d){alert("No se encontró el destino.");return}const select=$("#reservationPlace");const option=Array.from(select.options).find(o=>o.value===d.name||o.textContent.trim()===d.name);if(!option){alert("Este destino no está disponible en el formulario de reservas.");return}select.value=option.value;const dateInput=$("#reservationDate");if(dateInput)dateInput.value=date||"";showTab("reservas");select.focus()}
     function saveDraft(){localStorage.setItem("oriente_trip",JSON.stringify(trip));localStorage.setItem("oriente_day_dates",JSON.stringify(dayDates));$("#tripCount").textContent=trip.length}
-    function renderMap(){const points=trip.length?trip:destinations.slice(0,5).map((d,i)=>({id:d.id,day:1}));$("#map").querySelectorAll(".marker").forEach(x=>x.remove());points.forEach((item,i)=>{const d=destinations.find(x=>x.id===item.id);$("#map").insertAdjacentHTML("beforeend",`<button class="marker" style="left:${d.x}%;top:${d.y}%" title="${d.name}"><b>${i+1}</b></button>`)});$("#mapTitle").textContent=`${points.length} lugares en el mapa`;$("#mapItems").innerHTML=points.map((item,i)=>{const d=destinations.find(x=>x.id===item.id);return `<div class="map-item"><b>${i+1}</b><span><strong>${d.name}</strong><small>${d.dept} · ${d.type}</small></span></div>`}).join("")}
+    function renderMap(){
+
+  const points = destinations.map(d => ({id:d.id, day:1}));
+
+  // Crear el mapa una sola vez
+  if (!window.tourismMap) {
+    window.tourismMap = L.map("map").setView([-13.5, -64.5], 5);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(window.tourismMap);
+
+    window.markerLayer = L.layerGroup().addTo(window.tourismMap);
+  }
+
+  // Coordenadas de los destinos
+  const coordinates = {
+    samaipata: [-18.18, -63.87],
+    amboro: [-17.65, -63.75],
+    misiones: [-16.12, -62.03],
+    rurrenabaque: [-14.44, -67.53],
+    yacuma: [-13.75, -66.50],
+    madidi: [-14.43, -67.53],
+    cobija: [-11.03, -68.77],
+    manuripi: [-11.65, -67.15],
+    tahumanu: [-11.10, -67.55]
+  };
+
+  // Eliminar marcadores anteriores
+  window.markerLayer.clearLayers();
+
+  // Agregar los puntos rojos
+  points.forEach(item => {
+    const d = destinations.find(x => x.id === item.id);
+    if (!d || !coordinates[d.id]) return;
+
+    const marker = L.circleMarker(coordinates[d.id], {
+      radius: 9,
+      color: "#ffffff",
+      weight: 2,
+      fillColor: "#e32636",
+      fillOpacity: 1
+    });
+
+    marker.bindPopup(
+      `<strong>${d.name}</strong><br>${d.dept} · ${d.type}`
+    );
+
+    marker.addTo(window.markerLayer);
+  });
+
+  // Actualizar la lista lateral
+  $("#mapTitle").textContent = `${points.length} destinos turísticos`;
+
+  $("#mapItems").innerHTML = points.map((item, i) => {
+    const d = destinations.find(x => x.id === item.id);
+
+    return `<div class="map-item">
+      <b>${i+1}</b>
+      <span>
+        <strong>${d.name}</strong>
+        <small>${d.dept} · ${d.type}</small>
+      </span>
+    </div>`;
+  }).join("");
+
+  // Mostrar todos los destinos
+  const bounds = points
+    .map(item => coordinates[item.id])
+    .filter(Boolean);
+
+  if (bounds.length) {
+    window.tourismMap.fitBounds(bounds, {
+      padding: [30, 30],
+      maxZoom: 8
+    });
+  }
+
+  setTimeout(() => {
+    window.tourismMap.invalidateSize();
+  }, 300);
+}
     function renderPlanner(){const n=+$("#days").value;$("#daysContainer").innerHTML=Array.from({length:n},(_,i)=>i+1).map(day=>{const items=trip.filter(x=>x.day===day);return `<section class="day"><div class="day-heading"><h3>Día ${day}</h3><label>Fecha <input type="date" value="${dayDates[day]||""}" onchange="setDayDate(${day},this.value)"></label></div>${items.length?items.map((it,idx)=>{const d=destinations.find(x=>x.id===it.id);return `<div class="trip-row"><b>${trip.findIndex(x=>x.id===it.id)+1}</b><span><strong>${d.name}</strong><small>${d.dept} · ${d.type}</small></span><select onchange="moveItem('${it.id}',this.value)">${Array.from({length:n},(_,j)=>`<option value="${j+1}" ${it.day===j+1?"selected":""}>Día ${j+1}</option>`).join("")}</select><button class="delete" onclick="removeItem('${it.id}')">✕</button></div>`}).join(""):'<p class="empty">Agrega un lugar o muévelo a este día.</p>'}</section>`}).join("");$("#summaryTitle").textContent=`${trip.length} lugares organizados`;$("#tripCount").textContent=trip.length}
     function setDayDate(day,date){if(date){for(let d=1;d<day;d++){if(dayDates[d]&&dayDates[d]>date){alert("La fecha del Día "+day+" no puede ser anterior a la del Día "+d+".");renderPlanner();return}}for(let d=day+1;d<=+$("#days").value;d++){if(dayDates[d]&&dayDates[d]<date){alert("La fecha del Día "+day+" no puede ser posterior a la del Día "+d+".");renderPlanner();return}}dayDates[day]=date}else{delete dayDates[day]}saveDraft();renderPlanner()}
     window.moveItem=(id,day)=>{trip=trip.map(x=>x.id===id?{...x,day:+day}:x);saveDraft();renderPlanner()};window.removeItem=id=>{trip=trip.filter(x=>x.id!==id);saveDraft();renderPlanner()};
