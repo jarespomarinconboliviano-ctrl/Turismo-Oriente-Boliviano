@@ -577,7 +577,12 @@ submitButton.disabled=true;
 
     reservationForm.onsubmit = async e => {
       e.preventDefault();
+const session = getSession();
 
+if (!session || !session.token) {
+  showAuth("login");
+  return;
+}
       const button = $("#reservationButton");
       const status = $("#reservationStatus");
 
@@ -604,6 +609,7 @@ submitButton.disabled=true;
           },
           body: JSON.stringify({
             action: "reservation",
+token: getSession()?.token || "",
 nombre: name,
 email: email,
 tipo: type,
