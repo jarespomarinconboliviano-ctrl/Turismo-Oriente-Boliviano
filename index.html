@@ -265,7 +265,71 @@
     function setDayDate(day,date){if(date){for(let d=1;d<day;d++){if(dayDates[d]&&dayDates[d]>date){alert("La fecha del Día "+day+" no puede ser anterior a la del Día "+d+".");renderPlanner();return}}for(let d=day+1;d<=+$("#days").value;d++){if(dayDates[d]&&dayDates[d]<date){alert("La fecha del Día "+day+" no puede ser posterior a la del Día "+d+".");renderPlanner();return}}dayDates[day]=date}else{delete dayDates[day]}saveDraft();renderPlanner()}
     window.moveItem=(id,day)=>{trip=trip.map(x=>x.id===id?{...x,day:+day}:x);saveDraft();renderPlanner()};window.removeItem=id=>{trip=trip.filter(x=>x.id!==id);saveDraft();renderPlanner()};
     $("#days").onchange=()=>{const n=+$("#days").value;trip=trip.map(x=>({...x,day:Math.min(x.day,n)}));saveDraft();renderPlanner()};
-    function renderSaved(){const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");$("#savedTrips").innerHTML=saved.length?saved.slice(0,5).map(x=>{let html='<div class="saved-item"><div class="saved-heading"><h3>'+x.name+'</h3><button type="button" class="delete-saved" onclick="deleteSavedTrip(\''+x.id+'\')">Eliminar</button></div><small>'+x.days+' días · '+x.items.length+' lugares</small>';for(let day=1;day<=+x.days;day++){const items=x.items.filter(it=>it.day===day);const date=x.dates&&x.dates[day]?x.dates[day].split("-").reverse().join("/"):"Fecha no asignada";html+='<div class="saved-day"><b>Día '+day+' · '+date+'</b>';if(items.length){items.forEach(it=>{const d=destinations.find(z=>z.id===it.id);if(d)html+='<div class="saved-destination"><span><strong>'+d.name+'</strong><small>'+d.dept+' · '+d.type+'</small></span><button type="button" onclick="reserveFromTrip(\''+d.id+'\',\''+(x.dates&&x.dates[day]||'')+'\')">Reservar</button></div>'})}else{html+='<p>Sin destinos asignados.</p>'}html+='</div>'}return html+'</div>'}).join(""):'<p>Aún no tienes viajes guardados.</p>'}
+    async function renderSaved() {
+  const container = $("#savedTrips");
+  const session = getSession();
+
+  if (!session || !session.token) {
+    container.innerHTML = "<p>Inicia sesión para consultar tus viajes guardados.</p>";
+    return;
+  }
+
+  container.innerHTML = "<p>Cargando tus viajes...</p>";
+
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
+      body: JSON.stringify({
+        action: "getItineraries",
+        token: session.token
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      container.innerHTML = "<p>" + (data.message || "No se pudieron cargar tus viajes.") + "</p>";
+      return;
+    }
+
+    const saved = data.itineraries || [];
+
+    container.innerHTML = saved.length
+      ? saved.slice(0, 5).map(x => {
+          let html = '<div class="saved-item"><div class="saved-heading"><h3>' + x.name + '</h3><button type="button" class="delete-saved" onclick="deleteSavedTrip(\'' + x.id + '\')">Eliminar</button></div><small>' + x.days + ' días · ' + x.items.length + ' lugares</small>';
+
+          for (let day = 1; day <= +x.days; day++) {
+            const items = x.items.filter(it => it.day === day);
+            const date = x.dates && x.dates[day]
+              ? x.dates[day].split("-").reverse().join("/")
+              : "Fecha no asignada";
+
+            html += '<div class="saved-day"><b>Día ' + day + ' · ' + date + '</b>';
+
+            if (items.length) {
+              items.forEach(it => {
+                const d = destinations.find(z => z.id === it.id);
+
+                if (d) {
+                  html += '<div class="saved-destination"><span><strong>' + d.name + '</strong><small>' + d.dept + ' · ' + d.type + '</small></span><button type="button" onclick="reserveFromTrip(\'' + d.id + '\',\'' + (x.dates && x.dates[day] || '') + '\')">Reservar</button></div>';
+                }
+              });
+            } else {
+              html += '<p>Sin destinos asignados.</p>';
+            }
+
+            html += '</div>';
+          }
+
+          return html + '</div>';
+        }).join("")
+      : "<p>Aún no tienes viajes guardados.</p>";
+
+  } catch (error) {
+    container.innerHTML = "<p>No se pudo conectar con el servidor.</p>";
+  }
+}
     async function deleteSavedTrip(id) {
   if (!confirm("¿Estás seguro de que deseas eliminar este itinerario?")) return;
 
@@ -299,7 +363,62 @@
   } catch (error) {
     alert("No se pudo conectar con el servidor.");
   }
-}    $("#saveTrip").onclick=()=>{if(trip.length===0){alert("Itinerario vacío. Agrega al menos un destino para guardar tu viaje.");return}const saved=JSON.parse(localStorage.getItem("oriente_saved")||"[]");saved.unshift({id:Date.now(),name:$("#tripName").value||"Mi viaje",days:+$("#days").value,items:trip.map(x=>({...x})),dates:{...dayDates}});localStorage.setItem("oriente_saved",JSON.stringify(saved.slice(0,10)));trip=[];dayDates={};saveDraft();renderPlanner();renderSaved();$("#tripName").value="";$("#saveTrip").textContent="✓ Itinerario guardado";setTimeout(()=>$("#saveTrip").textContent="Guardar itinerario",1800)};
+}    
+    $("#saveTrip").onclick = async () => {
+  if (trip.length === 0) {
+    alert("Itinerario vacío. Agrega al menos un destino para guardar tu viaje.");
+    return;
+  }
+
+  const session = getSession();
+
+  if (!session || !session.token) {
+    alert("Debes iniciar sesión para guardar tus itinerarios.");
+    showAuth("login");
+    return;
+  }
+
+  const button = $("#saveTrip");
+  button.disabled = true;
+  button.textContent = "Guardando...";
+
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
+      body: JSON.stringify({
+        action: "saveItinerary",
+        token: session.token,
+        name: $("#tripName").value || "Mi viaje",
+        days: +$("#days").value,
+        items: trip.map(x => ({...x})),
+        dates: {...dayDates}
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      alert(data.message || "No se pudo guardar el itinerario.");
+      return;
+    }
+
+    trip = [];
+    dayDates = {};
+    saveDraft();
+    renderPlanner();
+    renderSaved();
+    $("#tripName").value = "";
+
+    alert("¡Itinerario guardado correctamente!");
+
+  } catch (error) {
+    alert("No se pudo conectar con el servidor.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Guardar itinerario";
+  }
+};
     /* Directorio informativo: solo se publican proveedores con referencias localizables */
     const directoryData={
       samaipata:{
