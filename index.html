@@ -128,10 +128,10 @@
 
       <div id="loginView" style="display:none">
         <h2>Iniciar sesión</h2>
-        <p>Ingresa con tu nombre y contraseña.</p>
+        <p>Ingresa con tu correo electrónico y contraseña.</p>
         <form class="auth-form" id="loginForm">
-          <label for="loginName">Nombre</label>
-          <input id="loginName" type="text" autocomplete="username" required>
+          <label for="loginEmail">Correo electrónico</label>
+          <input id="loginEmail" type="email" autocomplete="email" required>
 
           <label for="loginPassword">Contraseña</label>
           <input id="loginPassword" type="password" autocomplete="current-password" required>
@@ -708,11 +708,10 @@ submitButton.disabled=true;
 
     $("#loginForm").onsubmit=async e=>{
       e.preventDefault();
-      const name=$("#loginName").value,password=$("#loginPassword").value,error=$("#loginError");
+      const email=$("#loginEmail").value.trim().toLowerCase(),password=$("#loginPassword").value,error=$("#loginError");
       if(BACKEND_URL){
         try{
-          const r=await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"login",name,password})});
-          const d=await r.json();
+          const r=await fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"login",email,password})});          const d=await r.json();
           if(!d.ok){error.textContent=d.message||"Nombre o contraseña incorrectos.";error.classList.add("show");return}
           setSession({id:d.user.id,name:d.user.name,age:d.user.age,sex:d.user.sex,token:d.user.token});$("#loginForm").reset();hideAuth();renderAccount();return;
         }catch(err){error.textContent="No se pudo conectar con la base de datos.";error.classList.add("show");return}
